@@ -20,15 +20,7 @@
     <Property Name="AuthorID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Author" Relationship="Self.Books_fk1" FromRole="Books" ToRole="Authors" />
     <NavigationProperty Name="Category" Relationship="Self.Books_fk0" FromRole="Books" ToRole="Category" />
-    <NavigationProperty Name="Orders" Relationship="Self.Orders_fk1" FromRole="Books" ToRole="Orders" />
-  </EntityType>
-  <EntityType Name="BookStatus">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Orders" Relationship="Self.Orders_fk2" FromRole="BookStatus" ToRole="Orders" />
+    <NavigationProperty Name="Orders" Relationship="LibraryAppModel.Orders_fk1" FromRole="Book" ToRole="Order" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
@@ -37,26 +29,6 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Books" Relationship="Self.Books_fk0" FromRole="Category" ToRole="Books" />
-  </EntityType>
-  <EntityType Name="Order">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserID" Type="Int32" Nullable="false" />
-    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Returned" Type="Boolean" Nullable="false" />
-    <Property Name="BookID" Type="Int32" Nullable="false" />
-    <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="CustomerName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="CustomerSurname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="CustomerAge" Type="Int32" Nullable="false" />
-    <Property Name="CustomerPhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="CustomerEmail" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="BookStatusID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Book" Relationship="Self.Orders_fk1" FromRole="Orders" ToRole="Books" />
-    <NavigationProperty Name="BookStatu" Relationship="Self.Orders_fk2" FromRole="Orders" ToRole="BookStatus" />
-    <NavigationProperty Name="Worker" Relationship="Self.Orders_fk0" FromRole="Orders" ToRole="Workers" />
   </EntityType>
   <EntityType Name="Worker">
     <Key>
@@ -67,9 +39,9 @@
     <Property Name="Surname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Orders" Relationship="Self.Orders_fk0" FromRole="Workers" ToRole="Orders" />
     <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="Password" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="LibraryAppModel.Orders_fk0" FromRole="Worker" ToRole="Order" />
   </EntityType>
   <Association Name="Books_fk1">
     <End Role="Authors" Type="Self.Author" Multiplicity="1" />
@@ -95,48 +67,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="Orders_fk1">
-    <End Role="Books" Type="Self.Book" Multiplicity="1" />
-    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Books">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Orders">
-        <PropertyRef Name="BookID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="Orders_fk2">
-    <End Role="BookStatus" Type="LibraryAppModel.BookStatus" Multiplicity="1" />
-    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="BookStatus">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Orders">
-        <PropertyRef Name="BookStatusID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="Orders_fk0">
-    <End Role="Workers" Type="Self.Worker" Multiplicity="1" />
-    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Workers">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Orders">
-        <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="LibraryAppEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Authors" EntityType="Self.Author" />
     <EntitySet Name="Books" EntityType="Self.Book" />
-    <EntitySet Name="BookStatus1" EntityType="LibraryAppModel.BookStatus" />
     <EntitySet Name="Categories" EntityType="Self.Category" />
-    <EntitySet Name="Orders" EntityType="Self.Order" />
     <EntitySet Name="Workers" EntityType="Self.Worker" />
     <AssociationSet Name="Books_fk1" Association="Self.Books_fk1">
       <End Role="Authors" EntitySet="Authors" />
@@ -146,19 +80,22 @@
       <End Role="Category" EntitySet="Categories" />
       <End Role="Books" EntitySet="Books" />
     </AssociationSet>
-    <AssociationSet Name="Orders_fk1" Association="Self.Orders_fk1">
-      <End Role="Books" EntitySet="Books" />
-      <End Role="Orders" EntitySet="Orders" />
-    </AssociationSet>
-    <AssociationSet Name="Orders_fk2" Association="Self.Orders_fk2">
-      <End Role="BookStatus" EntitySet="BookStatus1" />
-      <End Role="Orders" EntitySet="Orders" />
-    </AssociationSet>
-    <AssociationSet Name="Orders_fk0" Association="Self.Orders_fk0">
-      <End Role="Workers" EntitySet="Workers" />
-      <End Role="Orders" EntitySet="Orders" />
-    </AssociationSet>
     <EntitySet Name="Admins" EntityType="LibraryAppModel.Admin" />
+    <EntitySet Name="BookStatus" EntityType="LibraryAppModel.BookStatu" />
+    <EntitySet Name="sysdiagrams" EntityType="LibraryAppModel.sysdiagram" />
+    <EntitySet Name="Orders" EntityType="LibraryAppModel.Order" />
+    <AssociationSet Name="Orders_fk1" Association="LibraryAppModel.Orders_fk1">
+      <End Role="Book" EntitySet="Books" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="Orders_fk2" Association="LibraryAppModel.Orders_fk2">
+      <End Role="BookStatu" EntitySet="BookStatus" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="Orders_fk0" Association="LibraryAppModel.Orders_fk0">
+      <End Role="Worker" EntitySet="Workers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Admin">
     <Key>
@@ -168,4 +105,78 @@
     <Property Name="Username" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
     <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
   </EntityType>
+  <EntityType Name="BookStatu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="LibraryAppModel.Orders_fk2" FromRole="BookStatu" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="Returned" Type="Boolean" Nullable="false" />
+    <Property Name="BookID" Type="Int32" Nullable="false" />
+    <Property Name="EndTime" Type="DateTime" Precision="7" />
+    <Property Name="CustomerName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerSurname" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerAge" Type="Int32" />
+    <Property Name="CustomerPhone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerEmail" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="BookStatusID" Type="Int32" />
+    <NavigationProperty Name="Book" Relationship="LibraryAppModel.Orders_fk1" FromRole="Order" ToRole="Book" />
+    <NavigationProperty Name="BookStatu" Relationship="LibraryAppModel.Orders_fk2" FromRole="Order" ToRole="BookStatu" />
+    <NavigationProperty Name="Worker" Relationship="LibraryAppModel.Orders_fk0" FromRole="Order" ToRole="Worker" />
+  </EntityType>
+  <Association Name="Orders_fk1">
+    <End Type="LibraryAppModel.Book" Role="Book" Multiplicity="1" />
+    <End Type="LibraryAppModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Orders_fk2">
+    <End Type="LibraryAppModel.BookStatu" Role="BookStatu" Multiplicity="0..1" />
+    <End Type="LibraryAppModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookStatu">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="BookStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Orders_fk0">
+    <End Type="LibraryAppModel.Worker" Role="Worker" Multiplicity="1" />
+    <End Type="LibraryAppModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Worker">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

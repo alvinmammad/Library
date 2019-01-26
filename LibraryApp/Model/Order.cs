@@ -19,16 +19,16 @@ namespace LibraryApp.Model
         public System.DateTime Date { get; set; }
         public bool Returned { get; set; }
         public int BookID { get; set; }
-        public System.DateTime EndTime { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
         public string CustomerName { get; set; }
         public string CustomerSurname { get; set; }
-        public int CustomerAge { get; set; }
+        public Nullable<int> CustomerAge { get; set; }
         public string CustomerPhone { get; set; }
         public string CustomerEmail { get; set; }
-        public int BookStatusID { get; set; }
+        public Nullable<int> BookStatusID { get; set; }
     
         public virtual Book Book { get; set; }
-        public virtual BookStatus BookStatu { get; set; }
+        public virtual BookStatu BookStatu { get; set; }
         public virtual Worker Worker { get; set; }
     }
 }

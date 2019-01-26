@@ -27,10 +27,11 @@ namespace LibraryApp.Model
     
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Book> Books { get; set; }
-        public virtual DbSet<BookStatus> BookStatus1 { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Worker> Workers { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<BookStatu> BookStatus { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
     }
 }

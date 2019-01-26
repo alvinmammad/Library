@@ -19,15 +19,17 @@ namespace LibraryApp
         public Form1()
         {
             InitializeComponent();
+            txtUsername.Text = "yolchu";
+            txtPassword.Text = "yolchu123";
         }
 
         
-
+        //When login to Dashboard form Login form will close
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
-
+        //Login to Dashboard form
         private void btnLogin_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(txtUsername.Text)||String.IsNullOrEmpty(txtPassword.Text))

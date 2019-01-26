@@ -7,17 +7,18 @@
       <Diagram DiagramId="73aaa8035fd24a08be983417a24e99a3" Name="Diagram1">
         <EntityTypeShape EntityType="LibraryAppModel.Author" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryAppModel.Book" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LibraryAppModel.BookStatus" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryAppModel.Category" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="LibraryAppModel.Order" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryAppModel.Worker" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
         <AssociationConnector Association="LibraryAppModel.Books_fk1" ManuallyRouted="false" />
         <AssociationConnector Association="LibraryAppModel.Books_fk0" ManuallyRouted="false" />
-        <AssociationConnector Association="LibraryAppModel.Orders_fk1" ManuallyRouted="false" />
-        <AssociationConnector Association="LibraryAppModel.Orders_fk2" ManuallyRouted="false" />
-        <AssociationConnector Association="LibraryAppModel.Orders_fk0" ManuallyRouted="false" />
         <EntityTypeShape EntityType="LibraryAppModel.Admin" Width="1.5" PointX="5.375" PointY="5.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="LibraryAppModel.BookStatu" Width="1.5" PointX="3" PointY="5.125" />
+        <EntityTypeShape EntityType="LibraryAppModel.sysdiagram" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="LibraryAppModel.Order" Width="1.5" PointX="8.25" PointY="4" />
+        <AssociationConnector Association="LibraryAppModel.Orders_fk1" />
+        <AssociationConnector Association="LibraryAppModel.Orders_fk2" />
+        <AssociationConnector Association="LibraryAppModel.Orders_fk0" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

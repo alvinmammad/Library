@@ -46,16 +46,26 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
-    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
     <Property Name="Returned" Type="bit" Nullable="false" />
     <Property Name="BookID" Type="int" Nullable="false" />
-    <Property Name="EndTime" Type="datetime" Nullable="false" />
-    <Property Name="CustomerName" Type="nvarchar" MaxLength="25" Nullable="false" />
-    <Property Name="CustomerSurname" Type="nvarchar" MaxLength="25" Nullable="false" />
-    <Property Name="CustomerAge" Type="int" Nullable="false" />
-    <Property Name="CustomerPhone" Type="nvarchar" MaxLength="10" Nullable="false" />
-    <Property Name="CustomerEmail" Type="nvarchar" MaxLength="25" Nullable="false" />
-    <Property Name="BookStatusID" Type="int" Nullable="false" />
+    <Property Name="EndTime" Type="datetime2" Precision="7" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="25" />
+    <Property Name="CustomerSurname" Type="nvarchar" MaxLength="25" />
+    <Property Name="CustomerAge" Type="int" />
+    <Property Name="CustomerPhone" Type="nvarchar" MaxLength="10" />
+    <Property Name="CustomerEmail" Type="nvarchar" MaxLength="25" />
+    <Property Name="BookStatusID" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Workers">
     <Key>
@@ -118,7 +128,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="Orders_fk2">
-    <End Role="BookStatus" Type="Self.BookStatus" Multiplicity="1" />
+    <End Role="BookStatus" Type="Self.BookStatus" Multiplicity="0..1" />
     <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="BookStatus">
@@ -136,6 +146,7 @@
     <EntitySet Name="BookStatus" EntityType="Self.BookStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="Books_fk0" Association="Self.Books_fk0">
       <End Role="Category" EntitySet="Category" />

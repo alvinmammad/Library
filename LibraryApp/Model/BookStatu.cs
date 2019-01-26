@@ -12,10 +12,10 @@ namespace LibraryApp.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class BookStatus
+    public partial class BookStatu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BookStatus()
+        public BookStatu()
         {
             this.Orders = new HashSet<Order>();
         }
